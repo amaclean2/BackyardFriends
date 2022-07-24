@@ -2,6 +2,8 @@ const { userResolvers } = require('./User');
 const { adventureResolvers } = require('./Adventure');
 const { activityResolvers } = require('./Activity');
 const { tickResolvers } = require('./Tick');
+const { pictureResolvers } = require('./Pictures');
+
 
 const resolvers = {
     Query: {
@@ -14,7 +16,11 @@ const resolvers = {
         ...userResolvers?.Mutation,
         ...adventureResolvers?.Mutation,
         ...activityResolvers?.Mutation,
-        ...tickResolvers?.Mutation
+        ...tickResolvers?.Mutation,
+        ...pictureResolvers?.Mutation
+    },
+    Upload: {
+        ...pictureResolvers?.Upload
     }
 };
 

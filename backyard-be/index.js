@@ -5,6 +5,7 @@ const { ApolloServer } = require('apollo-server-express');
 const { loadSchema } = require('@graphql-tools/load');
 const { GraphQLFileLoader } = require('@graphql-tools/graphql-file-loader');
 const { config } = require('dotenv');
+const graphqlUploadExpress = require('graphql-upload/graphqlUploadExpress.mjs');
 
 const resolvers = require('./Schema/Resolvers');
 const authService = require('./Services/auth.service');
@@ -36,12 +37,15 @@ const startApplication = async () => {
         typeDefs,
         resolvers,
         csrfPrevention: true,
+        cache: bounded,
         context: ({ req }) => ({
             user_id: req.body.id
         })
     });
 
     await server.start();
+
+    app.use(graphqlUploadExpress());
 
     server.applyMiddleware({
         app,
